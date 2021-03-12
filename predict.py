@@ -17,30 +17,25 @@ def main():
     try:
         model, map_locations, map_area, map_time = load_models()
     except Exception as e:
-        print('Unable to load models: ', e)
-        sys.exit()
+        stop_script('Unable to load models: ', e)
     try:
         f = load_file(inp)
     except Exception as e:
-        print('Error druring opening input file: ', e)
-        sys.exit()
+        stop_script('Error druring opening input file: ', e)
     try:
         X = preprocess(f, map_locations, map_area, map_time)
     except Exception as e:
-        print('Wrong data provided: ', e)
-        sys.exit()
+        stop_script('Wrong data provided: ', e)
     try:
         prediction = predict(X, model)
     except Exception as e:
-        print('Error during prediction: ', e)
-        sys.exit()
+        stop_script('Error during prediction: ', e)
     try:
         output = generate_output(f, prediction)
         save_output(output, outp)
-        print (f'Predictions saved to {outp}')
+        print(f'Predictions saved to {outp}')
     except Exception as e:
-        print('Error druring saving output file: ', e)
-        sys.exit()
+        stop_script('Error druring saving output file: ', e)
 
 def load_models():
     with open('models/model.pkl', 'rb') as file:
@@ -88,4 +83,11 @@ def save_output(output, path):
     with open(path, 'w+') as outfile:
         json.dump(output, outfile)
 
+def stop_script(message, exception):
+    print(message, exception)
+    sys.exit()
+
 main()
+
+# TODO declare custom exceptions
+# I did not export reusable code in separeate module because it is like 6 lines of it in this script.
