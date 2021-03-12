@@ -1,4 +1,5 @@
 # Taxi demand prediction
+Predicting taxi demand based on pickup time and location
 
 ## How to run
 1. *conda install --file requirements.txt* or *pip install -r requirements.txt*
